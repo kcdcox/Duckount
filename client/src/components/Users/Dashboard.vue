@@ -25,30 +25,9 @@
           </div>
 
         </div>
-        <div>
-          <p>{{options}}</p>
-          <p>{{keys[0].googleAPIKey}}</p>
-          <p>{{location}}</p>
-           <label for="location">Location </label>
-            <input
-                    type="text"
-                    id="location"
-                    name="location"
-                    v-model="location">
-        </div>
-        <vue-google-autocomplete
-            ref="address"
-            id="map"
-            classname="form-control"
-            type="'geocode'"
-            placeholder="Start typing"
-            :placechanged="getAddressData"
-        >
-        </vue-google-autocomplete>
 
         <div>
           <p class="par">{{idToken}}</p>
-          <!-- <p class="par">{{myFeedings}}</p> -->
            <v-data-table 
             class="dataTable elevation-1"
             :headers="headers"
@@ -66,44 +45,24 @@
 
 <script> 
 /* eslint-disable no-console*/
-import privateKeys from '../../privateKeys.json';
 import axios from 'axios';
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 export default {
-  components:{VueGoogleAutocomplete},
   data () {
     return {
-      location: '',
-      options: '',
-      keys: privateKeys,
       myFeedings: [],
       idToken: "",
-      address: '',
       headers: [
-      { text: 'Date',                 align: 'center', value: 'date' },
-      { text: 'Time',                 align: 'center', value: 'time' },
-      { text: 'City',                 align: 'center', value: 'city'  },
-      { text: 'State',                align: 'center', value: 'state' },
-      { text: 'Number of Ducks',      align: 'center', value: 'duckNumber'},
-      { text: 'Food Type',            align: 'center', value: 'foodType'},
-      { text: 'Food Kind',            align: 'center', value: 'foodKind' },
-      { text: 'Food Amount (grams)',  align: 'center', value: 'foodAmount' },
-      
-    ],
-    fill: [
-      {date: 'today', time: 'hello'}
-    ]
+        { text: 'Date',                 align: 'center', value: 'date' },
+        { text: 'Time',                 align: 'center', value: 'time' },
+        { text: 'Country',              align: 'center', value: 'country'  },
+        { text: 'City',                 align: 'center', value: 'city'  },
+        { text: 'State',                align: 'center', value: 'state' },
+        { text: 'Number of Ducks',      align: 'center', value: 'duckNumber'},
+        { text: 'Food Type',            align: 'center', value: 'foodType'},
+        { text: 'Food Amount (grams)',  align: 'center', value: 'foodAmount' },
+      ],
     }
-  },
-  
-  mounted() {
-    // this.$store.dispatch('saveURL', {url: '/dashboard'}); 
-    // this.autocomplete = new google.maps.places.Autocomplete(
-    //   (this.$refs.autocomplete),
-    //   {type: ['geocode']}
-    // );
-    this.$refs.address.focus();
   },
   methods: {
     fetchFeedings() {
@@ -116,16 +75,12 @@ export default {
           this.myFeedings = res.data.feedings;
         })
         .catch(error => console.log(error))
-    }, 
-    getAddressData(addressData) {
-      this.address = addressData;
     }
   },
   created () { 
     this.idToken = this.$store.getters.token; 
     this.fetchFeedings();
   }
-  
 }
 </script>
 

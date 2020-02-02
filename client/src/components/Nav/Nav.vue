@@ -4,7 +4,7 @@
     :style="{height: (navup) ? '120px':'360px'}">
 
     <router-link to="/" tag="div" class="logoCont" :style="{left: hamout ? 'calc(50% - 60px)':'40px'}">
-        <h1 class="everTtl">DUCKOUNT</h1>
+        <h1 class="duckTtl">DUCKOUNT</h1>
     </router-link>
 
     <!-- =====================================================RESPONSIVE SIGN-IN BUTTONS -->
@@ -107,12 +107,11 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.scrollPos);
+    this.$store.dispatch('fetchUser');
   },
   created() {
     window.addEventListener("resize", this.handleResize);
-    this.$store.dispatch('fetchUser');
     this.handleResize();
-    
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
@@ -127,9 +126,9 @@ export default {
 .loginCont{
   position: relative;
   width: 250px;
-  height: 80px;
+  height: 60px;
   left: calc(100vw - 250px);
-  top: 00px;
+  top: 0px;
   /* background: blue; */
 }
 /* ======================================================================LOGGED IN!? - PROFILE  */
@@ -141,7 +140,7 @@ export default {
 #loginBtn:hover{  background-color: black !important;}
 #dashIcon{
   position: absolute;
-  top: 25px;
+  top: 5px;
   background-color: #1691BC;
   color: white;
   z-index: 10;
@@ -152,11 +151,10 @@ export default {
 .profileOptions{
   display: flex;
   position: absolute;
-  /* overflow:hidden; */
   flex-flow: column;
   justify-content: flex-start;
   width: auto;
-  top: 33px;
+  top: 15px;
   right: calc(4vw + 5px);
   opacity: 1;
   padding-right: 10px;
@@ -205,7 +203,7 @@ export default {
   color: white;
   top: 16px;}
 .logoCont:hover{ color: #134F2B;}
-.everTtl{
+.duckTtl{
   text-align: center;
   line-height: 1.2em;
   font-family: acier-bat-solid, sans-serif;

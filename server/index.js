@@ -19,9 +19,11 @@ mongoose.connect('mongodb+srv://kevincox:PTbCtnxPZLqLRF2I@kcdcox-ysm9g.mongodb.n
 
 //Routes===================================================================
 const authRoutes = require('./routes/auth');
+const fedRoutes = require('./routes/fed');
 
 //USE====================================================================
 app.use(authRoutes);
+app.use(fedRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
