@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar" 
     v-on:mouseleave="navup=true" 
-    :style="{height: profileHover&&(profileHover&&auth) ? '180px':'100px'}">
+    :style="{height: profileHover&&(profileHover&&auth) ? '160px':'100px'}">
 
     <router-link to="/" tag="div" class="logoCont d-flex align-center">
         <h1 class="duckTtl">DUCKOUNT</h1>
@@ -33,10 +33,6 @@
       @mouseleave="profileHover = false"
       ref="profileOptionz"
       :style="{visibility: (profileHover) ? '' : 'hidden'}">
-
-      <div class="profileMenu">
-        <p class="hello">Hello!</p>
-      </div>
 
       <div class="profileMenu" >
         <router-link to="/dashboard">

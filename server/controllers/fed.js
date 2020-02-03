@@ -31,9 +31,7 @@ exports.fetchAllDucks = async (req, res, next) => {
 }
 
 exports.addFeeding = async (req, res, next) => {
-  //console.log(req.userId)
-  //console.log(req.body);
-  console.log(req.body.time)
+
   const userId = req.userId;
   const country = req.body.country;
   const city = req.body.city;
@@ -50,14 +48,11 @@ exports.addFeeding = async (req, res, next) => {
 
   Feeding.create(feeding)
   .then(res => {
-    console.log(res);
     const feedId = res.id;
     User.findById(userId)
     .then(user => {
       const feedData = user.feedData;
-      console.log(feedData);
       feedData.push(feedId);
-      console.log(feedData);
       User.findByIdAndUpdate(userId, {feedData})
       .then(res => console.log(res))
       .catch(err => {
@@ -90,7 +85,7 @@ exports.fetchFeedings = async (req, res, next) => {
   User.findById(userId)
   .populate('feedData')
   .then(result => {
-    console.log(result);
+    // console.log(result);
     res.status(201).json( {feedings: result.feedData} );
   })
   .catch(err => {

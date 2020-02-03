@@ -109,7 +109,34 @@ export default new Vuex.Store({
           this.fedToday = res;
         })
         .catch(error => console.log(error))
-    }
+    },
+    async addSchedule({state}, formData){
+      if (!state.idToken){ return}
+      for( var i = 0; i < 7 ; i++ ){
+        if(formData.days[i] === true){
+          const sched = {
+            country: formData.country,
+            city:  formData.city,
+            state:  formData.state,
+            park:  formData.park,
+            time:  formData.time,
+            duckNumber:  formData.duckNumber,
+            foodType:  formData.foodType,
+            foodAmount:  formData.foodAmount,
+            day: i,
+            dayName: formData.dayNames[i]
+          }
+          axios({
+            method: 'POST',
+            url: '/api/addSchedule',
+            headers: {Authorization: 'Bearer ' + state.idToken},
+            data: sched
+          })
+          .catch(error => console.log(error))
+        }
+      }
+      router.replace('/dashboard');
+    },
   },
   getters: {
     user (state) { return state.user;},

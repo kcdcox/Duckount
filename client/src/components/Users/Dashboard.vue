@@ -16,7 +16,7 @@
               <v-icon :style="{marginLeft: '10px'}">mdi-call-made</v-icon>
             </v-btn>
           </router-link>
-          <router-link to="/addFeeding" style="textDecoration: none !important;">
+          <router-link to="/addSched" style="textDecoration: none !important;">
             <v-btn class="optionBut" raised large>
               Create Automated Feeding Schedule
               <v-icon :style="{marginLeft: '10px'}">mdi-call-made</v-icon>
@@ -26,18 +26,44 @@
       </div>
 
       <div class="title text1 block">
-        <h1 class="text1 fsH1">Feeding History</h1>
+        <h1 class="text1 fsH1 pb-6">Feeding Schedule</h1>
       </div>
 
       <div>
           <v-data-table 
           class="dataTable elevation-1"
-          :headers="headers"
+          :headers="schedHeaders"
+          :items="mySchedule"
+          light
+          dense
+          sort-by="day"
+          rows-per-page="All"
+          multi-sort>
+          <template v-slot:item.action="{ item }">
+            <v-icon small @click="deleteSchedItem(item)">{{trash}}</v-icon>
+          </template>
+        </v-data-table>
+      </div> 
+
+      <div class="title text1 block">
+        <h1 class="text1 fsH1 pb-6">Feeding History</h1>
+      </div>
+
+      <div>
+          <v-data-table 
+          class="dataTable elevation-1"
+          :headers="feedHeaders"
           :items="myFeedings"
           light
           dense
+          sort-by="dateTime"
           rows-per-page="All"
           multi-sort>
+          
+          <template v-slot:item.action="{ item }">
+            <v-icon small @click="deleteFeedItem(item)">{{trash}}</v-icon>
+          </template>
+         
         </v-data-table>
       </div> 
 
@@ -48,9 +74,10 @@
       <div class="toDo d-flex justify-start flex-column">
         <p class="par">Total Feedings: {{totalFeedings}}</p>
         <p class="par">Total Ducks Fed: {{totalDucks}}</p>
-        <p class="par">Total Food Fed: {{totalFood}}</p>
+        <p class="par">Total Food Fed (grams): {{totalFood}}</p>
         <p class="par">Ducks Fed Per Feeding: {{parseInt(totalDucks/totalFeedings)}}</p>
       </div>
+
       
 
     </v-row>
@@ -61,6 +88,7 @@
 <script> 
 /* eslint-disable no-console*/
 import axios from 'axios';
+import { mdiTrashCanOutline } from '@mdi/js';
 
 export default {
   data () {
@@ -68,18 +96,34 @@ export default {
       totalDucks: 0,
       totalFeedings: 0,
       totalFood: 0,
+      trash: mdiTrashCanOutline,
       myFeedings: [],
+      mySchedule: [],
+      deleteAlert: false,
       idToken: "",
-      headers: [
-        { text: 'Date',                 align: 'center', value: 'date' },
-        { text: 'Time',                 align: 'center', value: 'time' },
-        { text: 'Country',              align: 'center', value: 'country'  },
-        { text: 'City',                 align: 'center', value: 'city'  },
-        { text: 'State',                align: 'center', value: 'state' },
-        { text: 'Park',                 align: 'center', value: 'park' },
-        { text: 'Number of Ducks',      align: 'center', value: 'duckNumber'},
-        { text: 'Food Type',            align: 'center', value: 'foodType'},
-        { text: 'Food Amount (grams)',  align: 'center', value: 'foodAmount' },
+      feedHeaders: [
+        { text: 'Date',                 value: 'date' },
+        { text: 'Time',                 value: 'time' },
+        { text: 'Country',              value: 'country'},
+        { text: 'City',                 value: 'city'  },
+        { text: 'State',                value: 'state' },
+        { text: 'Park',                 value: 'park' },
+        { text: 'Number of Ducks',      value: 'duckNumber'},
+        { text: 'Food Type',            value: 'foodType'},
+        { text: 'Food Amount (grams)',  value: 'foodAmount' },
+        { text: 'Delete',               value: 'action' }
+      ],
+      schedHeaders: [
+        { text: 'Day',                  value: 'dayName' },
+        { text: 'Time',                 value: 'time' },
+        { text: 'Country',              value: 'country'  },
+        { text: 'City',                 value: 'city'  },
+        { text: 'State',                value: 'state' },
+        { text: 'Park',                 value: 'park' },
+        { text: 'Number of Ducks',      value: 'duckNumber'},
+        { text: 'Food Type',            value: 'foodType'},
+        { text: 'Food Amount (grams)',  value: 'foodAmount' },
+        { text: 'Delete',               value: 'action' }
       ],
     }
   },
@@ -90,9 +134,20 @@ export default {
           Authorization: 'Bearer ' + this.idToken
         }})
         .then(res => { 
-          console.log(res);
+          // console.log(res);
           this.myFeedings = res.data.feedings;
           this.getStats(res.data.feedings);
+        })
+        .catch(error => console.log(error))
+    },
+    fetchSchedule() {
+      axios.get('/api/fetchSchedule', {
+        headers:{
+          Authorization: 'Bearer ' + this.idToken
+        }})
+        .then(res => { 
+          console.log(res);
+          this.mySchedule = res.data.scheds;
         })
         .catch(error => console.log(error))
     },
@@ -107,11 +162,20 @@ export default {
       this.totalDucks = ducks;
       this.totalFeedings = ++i;
       this.totalFood = food;
-    }
+    },
+    deleteSchedItem(item) {
+      const index = this.mySchedule.indexOf(item)
+      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+    },
+    deleteFeedItem(item) {
+      const index = this.myFeedings.indexOf(item)
+      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+    },
   },
   created () { 
     this.idToken = this.$store.getters.token; 
-    this.fetchFeedings();
+    this.fetchFeedings(); 
+    this.fetchSchedule();
   }
 }
 </script>

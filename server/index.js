@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const schedule = require('node-schedule');
+const moment = require('moment');
+const scheduledFeeds = require('./controllers/schedule.js');
 
 //Middleware===============================================================
 app.use(bodyParser.json());
@@ -20,10 +23,17 @@ mongoose.connect('mongodb+srv://kevincox:PTbCtnxPZLqLRF2I@kcdcox-ysm9g.mongodb.n
 //Routes===================================================================
 const authRoutes = require('./routes/auth');
 const fedRoutes = require('./routes/fed');
+const schRoutes = require('./routes/sched');
 
 //USE====================================================================
 app.use(authRoutes);
 app.use(fedRoutes);
+app.use(schRoutes);
+
+//FUNCTIONS
+function addSchedFeds(){ scheduledFeeds.addSchedFeds(); }
+var j = schedule.scheduleJob( '* 7 * * *', addSchedFeds());
+
 
 app.use((error, req, res, next) => {
   console.log(error);
