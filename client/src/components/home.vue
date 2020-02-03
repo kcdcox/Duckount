@@ -1,10 +1,15 @@
 <template>
-  <v-container fluid pa-0 ma-0>
-    <v-row id="firstlook">
+  <v-container fluid pa-0 ma-0 id="firstlook">
 
-     <p>{{fedToday}}</p>
+    <div class="statsCont">
+     <p class="hmTxt" style="font-size: 250px; line-height: 180px;">{{fedToday}}</p>
+     <p class="hmTxt" style="font-size: 25px; line-height: 30px;">Ducks have been fed</p>
+     <p class="hmTxt" style="font-size: 85px; line-height: 70px;">TODAY</p>
+     <p class="hmTxt" style="font-size: 16px; line-height: 20px;">{{foodToday}} grams of food over</p>
+     <p class="hmTxt" style="font-size: 16px; line-height: 20px;">{{feedingsToday}} feedings.</p>
 
-    </v-row>
+    </div>
+
   </v-container>
 </template>
 
@@ -16,20 +21,23 @@ export default {
   data() {
     return {
       fedToday: 0,
+      foodToday: 0,
+      feedingsToday: 0
     };
   },
   methods: {
-    fetchDucksFedToday() {
-      axios.get('/api/fetchTodayDucks')
+    fetchTodayDucks() {
+      axios.get('/api/fetchAllDucks')
         .then(res => { 
-          console.log(res);
-          this.fedToday = res;
+          this.fedToday = res.data.totalFed;
+          this.foodToday = res.data.totalFood;
+          this.feedingsToday = res.data.i;
         })
         .catch(error => console.log(error))
-    }
+    },
   },
   created() {
-    this.fetchDucksFedToday();
+    this.fetchTodayDucks();
   }
 
 }
@@ -39,9 +47,26 @@ export default {
 #firstlook{
   position: relative;
   top: 0;
-  left: 0;
+  left: 0px;
   width: 100vw;
-  height: 100vh;
+  height: auto;
+  height: calc(100vh - 140px);
+  min-height: 600px;
   background-color: orange;}
+.statsCont{
+  position: relative;
+  top: 140px;
+  font-family: acier-bat-solid, sans-serif;
+  font-style: normal;
+  font-weight: 200;
+  text-align: center;
+  color: white;
+  padding-bottom: 100px;}
+.statNum{
+  font-size: calc(30px + 4vw);
+  line-height: calc(30px + 4vw);}
+.hmTxt{
+  padding: 0;
+  margin: 0;}
 
 </style>

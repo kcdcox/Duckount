@@ -12,7 +12,6 @@ export default new Vuex.Store({
     idToken: null,
     userId: null,
     user: null,
-    lastURL: ''
   },
   mutations:{
     authUser (state, userData){
@@ -72,8 +71,6 @@ export default new Vuex.Store({
         token: token,
         userId: userId
       });
-      router.replace(localStorage.getItem('lastURL'));
-
     },
     logout({commit}) { 
       commit('clearAuthData'); 
@@ -91,21 +88,7 @@ export default new Vuex.Store({
       if (!state.idToken){ return}
       axios.get('/api/fetchUser', {
         headers:{ Authorization: 'Bearer ' + state.idToken }})
-        .then(res => { commit('storeUser', res.data)})
-        .catch(error => console.log(error))
-    },
-    saveURL ({state}, last) {
-      state.lastURL = last.url;
-      console.log(state.lastURL);
-      localStorage.setItem('lastURL', state.lastURL);
-    },
-    fetchFeedings({state}) {
-      axios.get('/api/fetchFeedings', {
-        headers:{ Authorization: 'Bearer ' + state.idToken}})
-        .then(res => { 
-          console.log(res);
-          return res.feedings;
-        })
+        .then(res => { console.log(res.data); commit('storeUser', res.data)})
         .catch(error => console.log(error))
     },
     addFeeding({state}, formData){
@@ -118,6 +101,14 @@ export default new Vuex.Store({
         })
         .catch(error => console.log(error))
         router.replace('/dashboard');
+    },
+    fetchTodayDucks(){
+      axios.get('/api/fetchTodayDucks')
+        .then(res => { 
+          console.log(res);
+          this.fedToday = res;
+        })
+        .catch(error => console.log(error))
     }
   },
   getters: {

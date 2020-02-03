@@ -1,8 +1,34 @@
 //CONTROLLERS/forms
 const Feeding = require('../models/feeding');
 const User = require('../models/user');
-const {validationResult} = require('express-validator');
-const moment = require('moment')
+const moment = require('moment');
+
+exports.fetchAllDucks = async (req, res, next) => {
+  const today = moment().startOf('day');
+  var totalFed = 0;
+  var totalFood = 0;
+  var i = 0;
+  Feeding.find({ dateTime: {
+      $gte: today.toDate(),
+      $lte: moment(today).endOf('day').toDate()
+    }
+  })
+  .then(result => {
+    for(i in result){
+      totalFed += result[i].duckNumber;
+      totalFood += result[i].foodAmount;
+    }
+    i++;
+    res.status(201).json( {totalFed, totalFood, i} );
+  })
+  .catch(err => {
+    if (!err.statusCode) {
+      console.log("auth/login error not authenticated")
+      err.statusCode = 500;
+    }
+    next(err);
+  })
+}
 
 exports.addFeeding = async (req, res, next) => {
   //console.log(req.userId)
@@ -11,6 +37,7 @@ exports.addFeeding = async (req, res, next) => {
   const userId = req.userId;
   const country = req.body.country;
   const city = req.body.city;
+  const park = req.body.park;
   const state = req.body.state;
   const dateTime = req.body.dateTime;
   const time = req.body.time;
@@ -19,7 +46,7 @@ exports.addFeeding = async (req, res, next) => {
   const foodType = req.body.foodType;
   const foodAmount = req.body.foodAmount;
 
-  const feeding = new Feeding({userId, city, country, state, dateTime, time, date, duckNumber, foodType, foodAmount});
+  const feeding = new Feeding({userId, city, country, state, dateTime, park,  time, date, duckNumber, foodType, foodAmount});
 
   Feeding.create(feeding)
   .then(res => {
@@ -48,7 +75,6 @@ exports.addFeeding = async (req, res, next) => {
       }
       next(err);
     })
-    
   })
   .catch(err => {
     if (!err.statusCode) {
@@ -76,27 +102,7 @@ exports.fetchFeedings = async (req, res, next) => {
   })
 }
 
-exports.fetchTodayDucks = async (req, res, next) => {
-  console.log("hello");
 
-  const today = moment().startOf('day')
-  Feeding.find({ dateTime: {
-      $gte: today.toDate(),
-      $lte: moment(today).endOf('day').toDate()
-    }
-  })
-  .then(result => {
-    console.log(result);
-    res.status(201).json( {fed: yes} );
-  })
-  .catch(err => {
-    if (!err.statusCode) {
-      console.log("auth/login error not authenticated")
-      err.statusCode = 500;
-    }
-    next(err);
-  })
-}
 
 
 

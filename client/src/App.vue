@@ -24,16 +24,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=BenchNine:300|Baloo+Tammudu|Oswald}Open+Sans|Cabin:400,700|Quicksand:500,700|Bowlby+One|Amatic+SC|Lato:300,400,400italic,600,700|Roboto:400,500,700|Montserrat:100,200,400|Nunito:400,600,700|Raleway:300,400,500,600,700");
 @import url("https://use.typekit.net/dzk8mgi.css");
 
-/* ============COLOUR PALLETTE */
-.d4Green{color: #134F2B;}
-.d3Green{color: #005c1d;}
-.d2Green{color: #4C7237;} 
-.d1Green{color: #5daa58;}
-.d0Green{color: #9abf72;}
-.d0range{color: #ac6632;}
-.d0Blue{color: #7ab2bc;}
-.d0White{color: #e4e1e1;}
-.d0Red{ color: #8D3D05}
+
 /* ========================= */
 .w100{width: 100%;}
 a:link {text-decoration: none !important;}

@@ -49,7 +49,7 @@
         <p class="par">Total Feedings: {{totalFeedings}}</p>
         <p class="par">Total Ducks Fed: {{totalDucks}}</p>
         <p class="par">Total Food Fed: {{totalFood}}</p>
-        <p class="par">Ducks Fed Per Feeding: {{totalDucks/totalFeedings}}</p>
+        <p class="par">Ducks Fed Per Feeding: {{parseInt(totalDucks/totalFeedings)}}</p>
       </div>
       
 
@@ -76,6 +76,7 @@ export default {
         { text: 'Country',              align: 'center', value: 'country'  },
         { text: 'City',                 align: 'center', value: 'city'  },
         { text: 'State',                align: 'center', value: 'state' },
+        { text: 'Park',                 align: 'center', value: 'park' },
         { text: 'Number of Ducks',      align: 'center', value: 'duckNumber'},
         { text: 'Food Type',            align: 'center', value: 'foodType'},
         { text: 'Food Amount (grams)',  align: 'center', value: 'foodAmount' },

@@ -12,7 +12,7 @@ import Feeding from './components/Users/addFeeding.vue'
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '', component: HomeComponent},
+    { path: '/', component: HomeComponent},
     { path: '/signup', component: SignupPage },
     { path: '/signin', component: SigninPage },
     { path: '/dashboard', component: Dashboard, 

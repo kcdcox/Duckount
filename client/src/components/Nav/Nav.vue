@@ -1,9 +1,9 @@
 <template>
   <div class="nav-bar" 
     v-on:mouseleave="navup=true" 
-    :style="{height: profileHover||auth ? '180px':'100px'}">
+    :style="{height: profileHover&&(profileHover&&auth) ? '180px':'100px'}">
 
-    <router-link to="/" tag="div" class="logoCont d-flex align-center" :style="{left: hamout ? 'calc(50% - 60px)':'40px'}">
+    <router-link to="/" tag="div" class="logoCont d-flex align-center">
         <h1 class="duckTtl">DUCKOUNT</h1>
     </router-link>
 
@@ -32,10 +32,10 @@
       v-if="auth"
       @mouseleave="profileHover = false"
       ref="profileOptionz"
-      :style="{visibility: (profileHover) ? '' : 'hidden', height: profileHeight + 'px'}">
+      :style="{visibility: (profileHover) ? '' : 'hidden'}">
 
       <div class="profileMenu">
-        <p class="hello">Hi, {{firstName}}!</p>
+        <p class="hello">Hello!</p>
       </div>
 
       <div class="profileMenu" >
@@ -60,82 +60,28 @@ export default {
   name: "NavComponent",
   data() {
     return {
-      windowWidth: 0,
-      hamout: false,
-      navup: true,
       profileHover: false,
-      profileHeight: '',
-      navBack: false
     };
   },
-  watch: {
-    windowWidth() {
-      if(this.windowWidth < 1100){
-        this.hamout = true;
-      } else {
-        this.hamout = false;
-        this.navup = true;
-      }
-    },
-    profileHover() {
-      if(this.profileHover == true){
-        this.calcProfileHeight();
-      } else {
-        this.treeWidth = '0';
-        this.profileHeight = '0';
-      }
-    }
-  },
-  computed: {
-    navLinks() {
-      if (!this.hamout) {
-        return "inline-block";
-      } else if (this.hamout && this.navup) {
-        return "none";
-      } else {
-        return "block";
-      }
-    },
-    auth () { return this.$store.getters.isAuthenticated; },
-    firstName() {return !this.$store.getters.user ? false : this.$store.getters.user.firstName;}
-  },
-  methods: {
-    handleResize() { this.windowWidth = window.innerWidth;},
-    onLogout() { this.$store.dispatch('logout');},
-    calcProfileHeight() { this.profileHeight = this.$refs.profileOptionz.clientWidth * 1.5;},
-    scrollPos() { window.scrollY > 200 ? this.navBack = true : this.navBack = false;}
-  },
-  mounted() {
-    window.addEventListener('scroll', this.scrollPos);
-    this.$store.dispatch('fetchUser');
-  },
-  created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.handleResize);
-  }
+  computed: { auth () { return this.$store.getters.isAuthenticated; },},
+  methods: {  onLogout() { this.$store.dispatch('logout');},},
+  created() { this.$store.dispatch('fetchUser');}
 };
 </script>
 <!--=================================================================================-->
 <!--=====================================================================STYLING=====-->
 <!--=================================================================================-->
-
 <style scoped>
 .nav-bar{
   background: #FFA500EE;
   -webkit-transition: height 0.2s ease; 
-  transition: height 0.2s ease;
-}
+  transition: height 0.2s ease;}
 .loginCont{
   position: relative;
   width: 250px;
   height: 100px;
   left: calc(100vw - 250px);
-  top: 0px;
-  /* background: blue; */
-}
+  top: 0px;}
 /* ======================================================================LOGGED IN!? - PROFILE  */
 #loginBtn, #dashIcon {
   position: relative;
@@ -171,8 +117,7 @@ export default {
   transition:  height 0.2s;
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;}
-.profileOptions:hover{
-  display: block;}
+.profileOptions:hover{  display: block;}
 .text1{
   font-family: acier-bat-solid, sans-serif;
   font-style: normal;
@@ -204,6 +149,7 @@ export default {
 .logoCont{
   height: 100px;
   position: fixed;
+  left: 3vw;
   z-index: 10;
   cursor: pointer;
   color: white;
@@ -219,7 +165,4 @@ export default {
   opacity: 0.9;
   margin: 0;
   padding: 0;}
-
-
-
 </style>
