@@ -2,6 +2,7 @@
 const Feeding = require('../models/feeding');
 const User = require('../models/user');
 const {validationResult} = require('express-validator');
+const moment = require('moment')
 
 exports.addFeeding = async (req, res, next) => {
   //console.log(req.userId)
@@ -61,14 +62,10 @@ exports.addFeeding = async (req, res, next) => {
 exports.fetchFeedings = async (req, res, next) => {
   const userId = req.userId;
   User.findById(userId)
-  // .select('feedData')
   .populate('feedData')
   .then(result => {
     console.log(result);
     res.status(201).json( {feedings: result.feedData} );
-   
-    // console.log(res._id.feedData);
-    // res.status(200).json({res});
   })
   .catch(err => {
     if (!err.statusCode) {
@@ -77,6 +74,30 @@ exports.fetchFeedings = async (req, res, next) => {
     }
     next(err);
   })
-
 }
+
+exports.fetchTodayDucks = async (req, res, next) => {
+  console.log("hello");
+
+  const today = moment().startOf('day')
+  Feeding.find({ dateTime: {
+      $gte: today.toDate(),
+      $lte: moment(today).endOf('day').toDate()
+    }
+  })
+  .then(result => {
+    console.log(result);
+    res.status(201).json( {fed: yes} );
+  })
+  .catch(err => {
+    if (!err.statusCode) {
+      console.log("auth/login error not authenticated")
+      err.statusCode = 500;
+    }
+    next(err);
+  })
+}
+
+
+
 

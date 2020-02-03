@@ -12,6 +12,8 @@ router.post('/api/addFeeding', auth, fedController.addFeeding);
 // FETCH ALL USER FEEDININGS
 router.get('/api/fetchFeedings', auth, fedController.fetchFeedings);
 
+// FETCH NUMBER OF DUCKS FED TODAY
+router.get('api/fetchTodayDucks', fedController.fetchTodayDucks);
 
 
 module.exports = router;   

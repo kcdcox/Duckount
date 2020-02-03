@@ -64,4 +64,3 @@ li a{ text-decoration: none !important;}
   margin-top: 30px;} 
 
 </style>
-// 'linear-gradient( rgb(93,170,88,0.5), rgb(93,170,88,0.5), rgb(93,170,88,0.0))'

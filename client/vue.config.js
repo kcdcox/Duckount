@@ -6,7 +6,7 @@ module.exports = {
         proxy: {
             '/api': {
                 logLevel: 'info', // or 'debug'
-                target: 'http://localhost:5008'
+                target: 'http://localhost:5009'
             }
         }
     },

@@ -1,9 +1,9 @@
 <template>
   <div class="nav-bar" 
     v-on:mouseleave="navup=true" 
-    :style="{height: (navup) ? '120px':'360px'}">
+    :style="{height: profileHover||auth ? '180px':'100px'}">
 
-    <router-link to="/" tag="div" class="logoCont" :style="{left: hamout ? 'calc(50% - 60px)':'40px'}">
+    <router-link to="/" tag="div" class="logoCont d-flex align-center" :style="{left: hamout ? 'calc(50% - 60px)':'40px'}">
         <h1 class="duckTtl">DUCKOUNT</h1>
     </router-link>
 
@@ -123,10 +123,15 @@ export default {
 <!--=================================================================================-->
 
 <style scoped>
+.nav-bar{
+  background: #FFA500EE;
+  -webkit-transition: height 0.2s ease; 
+  transition: height 0.2s ease;
+}
 .loginCont{
   position: relative;
   width: 250px;
-  height: 60px;
+  height: 100px;
   left: calc(100vw - 250px);
   top: 0px;
   /* background: blue; */
@@ -197,11 +202,12 @@ export default {
   margin: 0;}
 /* ====================LOGO======= */
 .logoCont{
+  height: 100px;
   position: fixed;
   z-index: 10;
   cursor: pointer;
   color: white;
-  top: 16px;}
+  top: 0px;}
 .logoCont:hover{ color: #134F2B;}
 .duckTtl{
   text-align: center;
