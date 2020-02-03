@@ -17,5 +17,4 @@ router.get('/api/fetchFeedings', auth, fedController.fetchFeedings);
 
 
 
-
 module.exports = router;   

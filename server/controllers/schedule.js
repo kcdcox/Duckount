@@ -75,8 +75,7 @@ exports.fetchSchedule = async (req, res, next) => {
 exports.addSchedFeds = async (req, res, next) => {
   Schedule.find({day: moment().day()})
   .then(toScFe => {
-    console.log(toScFe[0].userId);
-    console.log(toScFe.length);
+    var parseDate = moment(moment().format()).format("MMM D, YYYY");
     for(var i = 0; i <  toScFe.length; i++){
       const userId = toScFe[i].userId;
       const country = toScFe[i].country;
@@ -84,6 +83,7 @@ exports.addSchedFeds = async (req, res, next) => {
       const park = toScFe[i].park;
       const state = toScFe[i].state;
       const time = toScFe[i].time;
+      const date = parseDate;
       const dateTime = moment().format();
       const duckNumber = toScFe[i].duckNumber;
       const foodType = toScFe[i].foodType;

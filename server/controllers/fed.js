@@ -44,7 +44,7 @@ exports.addFeeding = async (req, res, next) => {
   const foodType = req.body.foodType;
   const foodAmount = req.body.foodAmount;
 
-  const feeding = new Feeding({userId, city, country, state, dateTime, park,  time, date, duckNumber, foodType, foodAmount});
+  const feeding = new Feeding({userId, city, country, state, dateTime, park, time, date, duckNumber, foodType, foodAmount});
 
   Feeding.create(feeding)
   .then(res => {
@@ -96,9 +96,4 @@ exports.fetchFeedings = async (req, res, next) => {
     next(err);
   })
 }
-
-
-
-
-
 

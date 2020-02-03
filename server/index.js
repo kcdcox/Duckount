@@ -31,9 +31,8 @@ app.use(fedRoutes);
 app.use(schRoutes);
 
 //FUNCTIONS
-function addSchedFeds(){ scheduledFeeds.addSchedFeds(); }
+function addSchedFeds(){ scheduledFeeds.addSchedFeds();}
 var j = schedule.scheduleJob( '* 7 * * *', addSchedFeds());
-
 
 app.use((error, req, res, next) => {
   console.log(error);

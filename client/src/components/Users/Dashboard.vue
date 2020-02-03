@@ -39,9 +39,6 @@
           sort-by="day"
           rows-per-page="All"
           multi-sort>
-          <template v-slot:item.action="{ item }">
-            <v-icon small @click="deleteSchedItem(item)">{{trash}}</v-icon>
-          </template>
         </v-data-table>
       </div> 
 
@@ -59,11 +56,6 @@
           sort-by="dateTime"
           rows-per-page="All"
           multi-sort>
-          
-          <template v-slot:item.action="{ item }">
-            <v-icon small @click="deleteFeedItem(item)">{{trash}}</v-icon>
-          </template>
-         
         </v-data-table>
       </div> 
 
@@ -77,8 +69,6 @@
         <p class="par">Total Food Fed (grams): {{totalFood}}</p>
         <p class="par">Ducks Fed Per Feeding: {{parseInt(totalDucks/totalFeedings)}}</p>
       </div>
-
-      
 
     </v-row>
 
@@ -111,7 +101,6 @@ export default {
         { text: 'Number of Ducks',      value: 'duckNumber'},
         { text: 'Food Type',            value: 'foodType'},
         { text: 'Food Amount (grams)',  value: 'foodAmount' },
-        { text: 'Delete',               value: 'action' }
       ],
       schedHeaders: [
         { text: 'Day',                  value: 'dayName' },
@@ -123,7 +112,6 @@ export default {
         { text: 'Number of Ducks',      value: 'duckNumber'},
         { text: 'Food Type',            value: 'foodType'},
         { text: 'Food Amount (grams)',  value: 'foodAmount' },
-        { text: 'Delete',               value: 'action' }
       ],
     }
   },
@@ -162,15 +150,7 @@ export default {
       this.totalDucks = ducks;
       this.totalFeedings = ++i;
       this.totalFood = food;
-    },
-    deleteSchedItem(item) {
-      const index = this.mySchedule.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-    },
-    deleteFeedItem(item) {
-      const index = this.myFeedings.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-    },
+    }
   },
   created () { 
     this.idToken = this.$store.getters.token; 

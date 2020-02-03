@@ -12,10 +12,5 @@ router.get('/api/fetchSchedule',     auth, schedController.fetchSchedule);
 // ADD SCHEDULE
 router.post('/api/addSchedule',       auth, schedController.addSchedule);
 
-// // DELETE SCHEDULE
-// router.delete('/api/deleteSchedule',  auth, schedController.deleteSchedule);
-
-
-
 
 module.exports = router;   
