@@ -89,6 +89,7 @@
                   class="form-control"
                   @blur="$v.country.$touch()"
                   v-model="country">
+           <p class="warner" v-if="!$v.country.alpha">Please only use letters.</p>
 
         </div>
         <!-- =================================STATE -->
@@ -101,6 +102,7 @@
                   class="form-control"
                   @blur="$v.state.$touch()"
                   v-model="state">
+           <p class="warner" v-if="!$v.state.alpha">Please only use letters.</p>
         </div>
         <!-- =================================CITY -->
         <div class="form-group  d-flex flex-column justify-start align-start"
@@ -112,6 +114,7 @@
                   class="form-control"
                   @blur="$v.city.$touch()"
                   v-model="city">
+           <p class="warner" v-if="!$v.city.alpha">Please only use letters.</p>
         </div>
         <!-- =================================PARK -->
         <div class="form-group  d-flex flex-column justify-start align-start">

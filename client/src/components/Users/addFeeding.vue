@@ -20,6 +20,7 @@
                   class="form-control"
                   @blur="$v.country.$touch()"
                   v-model="country">
+          <p class="warner" v-if="!$v.country.alpha">Please only use letters.</p>
 
         </div>
         <!-- =================================STATE -->
@@ -32,6 +33,7 @@
                   class="form-control"
                   @blur="$v.state.$touch()"
                   v-model="state">
+          <p class="warner" v-if="!$v.state.alpha">Please only use letters.</p>
         </div>
         <!-- =================================CITY -->
         <div class="form-group  d-flex flex-column justify-start align-start"
@@ -43,6 +45,7 @@
                   class="form-control"
                   @blur="$v.city.$touch()"
                   v-model="city">
+          <p class="warner" v-if="!$v.city.alpha">Please only use letters.</p>
         </div>
         <!-- =================================PARK -->
         <div class="form-group  d-flex flex-column justify-start align-start">
@@ -113,7 +116,7 @@
 <script>
 /* eslint-disable no-console */
 const moment = require('moment');
-import {required, integer, numeric} from 'vuelidate/lib/validators';
+import {required, integer, alpha, numeric} from 'vuelidate/lib/validators';
   export default {
     data() {
       return {
@@ -128,9 +131,9 @@ import {required, integer, numeric} from 'vuelidate/lib/validators';
       }
     },
     validations: {
-      country:        { required },
-      city:           { required },
-      state:          { required },
+      country:        { required, alpha },
+      city:           { required, alpha },
+      state:          { required, alpha },
       duckNumber:     { required, integer},
       dateTime:       { required },
       foodAmount:     { numeric }
