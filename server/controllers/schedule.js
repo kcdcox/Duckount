@@ -89,7 +89,7 @@ exports.addSchedFeds = async (req, res, next) => {
       const foodType = toScFe[i].foodType;
       const foodAmount = toScFe[i].foodAmount;
 
-      const feeding = new Feeding({userId, city, country, state, park, time, dateTime, duckNumber, foodType, foodAmount});
+      const feeding = new Feeding({userId, city, country, state, park, date, time, dateTime, duckNumber, foodType, foodAmount});
       Feeding.create(feeding)
       .then(res => {
         const feedId = res.id;

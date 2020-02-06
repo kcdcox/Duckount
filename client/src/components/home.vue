@@ -7,6 +7,7 @@
      <p class="hmTxt" style="font-size: 85px; line-height: 70px;">TODAY</p>
      <p class="hmTxt" style="font-size: 16px; line-height: 20px;">{{foodToday}} grams of food over</p>
      <p class="hmTxt" style="font-size: 16px; line-height: 20px;">{{feedingsToday}} feedings.</p>
+      <p class="hmTxt" style="font-size: 16px; line-height: 20px;">{{data}} feedings.</p>
 
     </div>
 
@@ -22,7 +23,8 @@ export default {
     return {
       fedToday: 0,
       foodToday: 0,
-      feedingsToday: 0
+      feedingsToday: 0,
+      data: []
     };
   },
   methods: {
@@ -32,6 +34,7 @@ export default {
           this.fedToday = res.data.totalFed;
           this.foodToday = res.data.totalFood;
           this.feedingsToday = res.data.i;
+          this.data = res.data;
         })
         .catch(error => console.log(error))
     },
