@@ -8,12 +8,15 @@ const schedule = require('node-schedule');
 const moment = require('moment');
 const scheduledFeeds = require('./controllers/schedule.js');
 
+const dotenv = require('dotenv');
+const { mongodb } = process.env;
+
 //Middleware===============================================================
 app.use(bodyParser.json());
 app.use(cors());
 
 //Database=================================================================
-mongoose.connect('mongodb+srv://kevincox:PTbCtnxPZLqLRF2I@kcdcox-ysm9g.mongodb.net/kcdcox?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://kevincox:'+ mongodb + '@kcdcox-ysm9g.mongodb.net/kcdcox?retryWrites=true&w=majority',
   { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
     app.listen(3000, () => console.log("Connected to MongoDB via Mongoose:)"));
@@ -28,7 +31,7 @@ const schRoutes = require('./routes/sched');
 //USE====================================================================
 app.use(authRoutes);
 app.use(fedRoutes);
-app.use(schRoutes);
+app.use(schRoutes); 
 
 //FUNCTIONS
 function addSchedFeds(){ scheduledFeeds.addSchedFeds();}

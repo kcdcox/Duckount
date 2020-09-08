@@ -16,6 +16,7 @@ exports.addSchedule = async (req, res, next) => {
   const foodAmount = req.body.foodAmount;
   const day = req.body.day;
   const dayName = req.body.dayName;
+  
   const schedule = new Schedule({userId, day, dayName, city, country, state, park,  time, duckNumber, foodType, foodAmount});
 
   Schedule.create(schedule)

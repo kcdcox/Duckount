@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
-const secretKey = require('./privateKey.json');
+
+const dotenv = require('dotenv');
+const { jsonKey } = process.env;
 
 module.exports = async (req, res, next) => {
   var authHeader =  req.get('authorization');
@@ -11,7 +13,7 @@ module.exports = async (req, res, next) => {
   const token = authHeader.split(' ')[1];
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, secretKey[0].jsonKey);
+    decodedToken = jwt.verify(token, jsonKey);
   } catch (err) {
     err.statusCode = 500;
     throw err;
